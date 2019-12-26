@@ -1,37 +1,37 @@
-# coding=windows-1251
+
 
 import os
 import time
 import zipfile
 
 target_dir = 'D:\\backups'
-backup_folder_name = target_dir + os.sep + time.strftime("%Y%m%d")      #все бэкапы за один день хранятся в одной папке
+backup_folder_name = target_dir + os.sep + time.strftime("%Y%m%d")      #ГўГ±ГҐ ГЎГЅГЄГ ГЇГ» Г§Г  Г®Г¤ГЁГ­ Г¤ГҐГ­Гј ГµГ°Г Г­ГїГІГ±Гї Гў Г®Г¤Г­Г®Г© ГЇГ ГЇГЄГҐ
 
 if not os.path.exists(backup_folder_name):
     os.mkdir(backup_folder_name)
-    print("Каталог {0} успешно создан!".format(backup_folder_name))
+    print("ГЉГ ГІГ Г«Г®ГЈ {0} ГіГ±ГЇГҐГёГ­Г® Г±Г®Г§Г¤Г Г­!".format(backup_folder_name))
 
 while True:
-    source = input("Введите путь:")                                     #путь к папке/файлу, которые надо заархивировать
+    source = input("Г‚ГўГҐГ¤ГЁГІГҐ ГЇГіГІГј:")                                     #ГЇГіГІГј ГЄ ГЇГ ГЇГЄГҐ/ГґГ Г©Г«Гі, ГЄГ®ГІГ®Г°Г»ГҐ Г­Г Г¤Г® Г§Г Г Г°ГµГЁГўГЁГ°Г®ГўГ ГІГј
 
     if not os.path.isdir(source):
-        print("Ошибка. Попробуйте снова!")
+        print("ГЋГёГЁГЎГЄГ . ГЏГ®ГЇГ°Г®ГЎГіГ©ГІГҐ Г±Г­Г®ГўГ !")
         continue
 
-    user_comment = input("Введите комментарий к архиву:")               #комментарий к названию файла
+    user_comment = input("Г‚ГўГҐГ¤ГЁГІГҐ ГЄГ®Г¬Г¬ГҐГ­ГІГ Г°ГЁГ© ГЄ Г Г°ГµГЁГўГі:")               #ГЄГ®Г¬Г¬ГҐГ­ГІГ Г°ГЁГ© ГЄ Г­Г Г§ГўГ Г­ГЁГѕ ГґГ Г©Г«Г 
 
-    if user_comment == 0:                                               #добавление комментария, если он есть
+    if user_comment == 0:                                               #Г¤Г®ГЎГ ГўГ«ГҐГ­ГЁГҐ ГЄГ®Г¬Г¬ГҐГ­ГІГ Г°ГЁГї, ГҐГ±Г«ГЁ Г®Г­ ГҐГ±ГІГј
         target = backup_folder_name + os.sep + time.strftime('%H%M') + '.zip'
     else:
         target = backup_folder_name + os.sep + time.strftime('%H%M') + "_" + user_comment.replace(" ", "_")  +'.zip'
 
-    try:                                                                #создание архива и запись файлов в него
+    try:                                                                #Г±Г®Г§Г¤Г Г­ГЁГҐ Г Г°ГµГЁГўГ  ГЁ Г§Г ГЇГЁГ±Гј ГґГ Г©Г«Г®Гў Гў Г­ГҐГЈГ®
         zip_backup = zipfile.ZipFile(target, 'w')
         time_before = time.time()
         for root, dirs, files in os.walk(source):
             for file in files:
                 zip_backup.write(os.path.join(root, file))
-        print("Архив создан в {0} за {1} сек".format(backup_folder_name, round(time.time() - time_before, 3)))
+        print("ГЂГ°ГµГЁГў Г±Г®Г§Г¤Г Г­ Гў {0} Г§Г  {1} Г±ГҐГЄ".format(backup_folder_name, round(time.time() - time_before, 3)))
         break
     except:
-        print("Ошибка. Попробуйте снова!")
+        print("ГЋГёГЁГЎГЄГ . ГЏГ®ГЇГ°Г®ГЎГіГ©ГІГҐ Г±Г­Г®ГўГ !")
